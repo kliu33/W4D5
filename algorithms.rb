@@ -63,7 +63,7 @@ end
 
 #Phase1
 
-def first_anagram(str1, str2)
+def first_anagram(str1, str2) #O(n!)
     chars1 = str1.split("")
     chars2 = str2.split("")
     anagrams = chars1.permutation(str1.length).to_a
@@ -76,7 +76,7 @@ end
 
 #Phase 2
 
-def second_anagram(str1, str2)
+def second_anagram(str1, str2) #O(n)
     chars1 = str1.split("")
     chars2 = str2.split("")
     chars1.each do |char|
@@ -91,28 +91,32 @@ end
 
 
 #Phase 3
-
+def third_anagram(str1, str2) #O(1) or O(n)
+    chars1 = str1.split("")
+    chars2 = str2.split("")
+    chars1.sort == chars2.sort
+end
 
 
 
 #Phase 4 O(n)
 
-# def fourth_anagram(str1, str2)
-#     count1 = Hash.new(0)
-#     count2 = Hash.new(0)
+def fourth_anagram(str1, str2) #O(n)
+    count1 = Hash.new(0)
+    count2 = Hash.new(0)
 
-#     str1.each_char do |char|
-#         count1[char] += 1
-#     end
+    str1.each_char do |char|
+        count1[char] += 1
+    end
 
-#     str2.each_char do |char|
-#         count2[char] += 1
-#     end
+    str2.each_char do |char|
+        count2[char] += 1
+    end
 
-#     count1.sort == count2.sort
-# end
+    count1.sort == count2.sort
+end
 
-#or
+#bonus
 
 def fourth_anagram(str1, str2)
     count = Hash.new(0)
@@ -129,6 +133,33 @@ def fourth_anagram(str1, str2)
 end
 
 
+# p third_anagram("gizmo", "sally")    #=> false
+# p third_anagram("elvis", "lives")    #=> true
 
-p second_anagram("gizmo", "sally")    #=> false
-p second_anagram("elvis", "lives")    #=> true
+def bad_two_sum?(arr, target_sum) #O(n^2)
+    (0...arr.length).each do |idx|
+        (idx+1...arr.length).each do |jdx|
+            if arr[idx] + arr[jdx] == target_sum
+                return true
+            end
+        end
+    end
+    return false
+end
+
+def okay_two_sum?(arr, target_sum)
+
+end
+
+def two_sum?(arr, target_sum) #O(n)
+    h = Hash.new()
+    arr.each do |num|
+        return true if h[target_sum - num] == num
+        h[num] = target_sum - num
+    end
+    return false
+end
+
+arr = [0, 4, 3, 5, 7, 4]
+p two_sum?(arr, 6) # => should be true
+p two_sum?(arr, 10) # => should be false
