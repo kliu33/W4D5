@@ -54,6 +54,81 @@ def better_version(list)
     largest_sum
 end
 
-list = [2,3,-6,7,-6,7]
-p better_version(list)
+# list = [2,3,-6,7,-6,7]
+# p better_version(list)
 
+
+
+#Anagrams
+
+#Phase1
+
+def first_anagram(str1, str2)
+    chars1 = str1.split("")
+    chars2 = str2.split("")
+    anagrams = chars1.permutation(str1.length).to_a
+    anagrams.each do |anagram|
+        return true if anagram == chars2
+    end
+    false
+end
+
+
+#Phase 2
+
+def second_anagram(str1, str2)
+    chars1 = str1.split("")
+    chars2 = str2.split("")
+    chars1.each do |char|
+        if chars2.include?(char)
+            chars2.delete_at(chars2.find_index(char))
+        else
+            return false
+        end
+    end
+    return true if chars2.empty?
+end
+
+
+#Phase 3
+
+
+
+
+#Phase 4 O(n)
+
+# def fourth_anagram(str1, str2)
+#     count1 = Hash.new(0)
+#     count2 = Hash.new(0)
+
+#     str1.each_char do |char|
+#         count1[char] += 1
+#     end
+
+#     str2.each_char do |char|
+#         count2[char] += 1
+#     end
+
+#     count1.sort == count2.sort
+# end
+
+#or
+
+def fourth_anagram(str1, str2)
+    count = Hash.new(0)
+
+    str1.each_char do |char|
+        count[char] += 1
+    end
+
+    str2.each_char do |char|
+        count[char] -= 1
+    end
+
+    count.none? {|k,v| v != 0 }
+end
+
+
+
+p second_anagram("gizmo", "sally")    #=> false
+p second_anagram("elvis", "lives")    #=> true
